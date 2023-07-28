@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... Head content ... -->
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <h1 class="game-title">Color Game</h1>
+    <nav>
+        <div>
+            <span id="username"></span>
+        </div>
+        <div>
+            <button id="logoutBtn">Log Out</button>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <button id="colorGameBtn">Color Game</button>
+    </div>
+
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            const confirmLogout = window.confirm("Voulez-vous vraiment vous déconnecter?");
+            if (confirmLogout) {
+                
+                alert("Logged out successfully!");
+                
+                window.location.href = "login.html";
+            }
+        });
+        document.getElementById("colorGameBtn").addEventListener("click", function() {
+            
+            alert("Navigating to Color Game page...");
+        });
+    </script>
+</body>
+</html>

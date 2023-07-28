@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... Head content ... -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="game-title">Color Game</h1>
+    <nav>
+        <div>
+            <span id="username"></span>
+        </div>
+        <div>
+            <a href="game.html">Back to Game Access</a>
+            <button id="logoutBtn">Log Out</button>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <label for="numColumns">Number of Columns:</label>
+        <input type="number" id="numColumns" min="1" required><br>
+
+        <label for="numRows">Number of Rows:</label>
+        <input type="number" id="numRows" min="1" required><br>
+
+        <button id="colorGameBtn">Start Color Game</button>
+    </div>
+
+    <div id="colorPopup" class="color-popup">
+        <label for="colorInput">Choose a Color:</label>
+        <input type="color" id="colorInput">
+        <button id="validateColorBtn">Validate</button>
+        <button id="cancelColorBtn">Cancel</button>
+    </div>
+
+    <div id="gridContainer"></div>
+
+    <script>
+        const colorPopup = document.getElementById("colorPopup");
+        const colorInput = document.getElementById("colorInput");
+        const numColumnsInput = document.getElementById("numColumns");
+        const numRowsInput = document.getElementById("numRows");
+        const gridContainer = document.getElementById("gridContainer");
+        let selectedColumn = -1;
+
+        document.getElementById("colorGameBtn").addEventListener("click", function() {
+            const numColumns = parseInt(numColumnsInput.value);
+            const numRows = parseInt(numRowsInput.value);
+
+            if (!isNaN(numColumns) && !isNaN(numRows)) {
+                generateGrid(numColumns, numRows);
+            } else {
+                alert("Please enter valid numbers for columns and rows.");
+            }
+        });
+
+        function generateGrid(numColumns, numRows) {
+            gridContainer.innerHTML = ""; // Clear previous grid
+
+            for (let row = 0; row < numRows; row++) {
+                const gridRow = document.createElement("div");
+                gridRow.classList.add("grid-row");
+                for (let col = 0; col < numColumns; col++) {
+                    const inputElement = document.createElement("input");
+                    inputElement.type = "text";
+                    inputElement.classList.add("color-input");
+                    gridRow.appendChild(inputElement);
+
+                    inputElement.addEventListener("click", function() {
+                        selectedColumn = col;
+                        showColorPopup();
+                    });
+                }
+                gridContainer.appendChild(gridRow);
+            }
+        }
+
+        function showColorPopup() {
+            colorPopup.style.display = "block";
+        }
+
+        document.getElementById("validateColorBtn").addEventListener("click", function() {
+            const selectedColor = colorInput.value;
+            if (selectedColumn >= 0) {
+                applyColorToColumn(selectedColor, selectedColumn);
+                selectedColumn = -1; 
+            }
+            colorPopup.style.display = "none";
+        });
+
+        document.getElementById("cancelColorBtn").addEventListener("click", function() {
+            selectedColumn = -1; 
+            colorPopup.style.display = "none";
+        });
+
+        function applyColorToColumn(selectedColor, colIndex) {
+            const gridRows = document.querySelectorAll(".grid-row");
+            gridRows.forEach(gridRow => {
+                const inputField = gridRow.children[colIndex];
+                inputField.style.backgroundColor = selectedColor;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="game-title">Color Game</h1>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" minlength="6" required><br>
+        <div class="error" id="usernameError"></div>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" minlength="5" required><br>
+        <div class="error" id="passwordError"></div>
+
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const usernameError = document.getElementById("usernameError");
+            const passwordError = document.getElementById("passwordError");
+
+            if (username.length < 6) {
+                usernameError.textContent = "Username should be at least 6 characters";
+                usernameError.style.color = "red";
+            } else {
+                usernameError.textContent = "";
+            }
+
+            if (password.length < 5) {
+                passwordError.textContent = "Password should be at least 5 characters";
+                passwordError.style.color = "red";
+            } else {
+                passwordError.textContent = "";
+            }
+
+            if (username.length >= 6 && password.length >= 5) {
+                alert("Login successful!");
+            }
+        });
+    </script>
+</body>
+</html>
